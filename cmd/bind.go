@@ -70,7 +70,7 @@ func (b *Binding) write() error {
 		return err
 	}
 	defer f.Close()
-	data, err := json.Marshal(b)
+	data, err := json.MarshalIndent(b, "", "  ")
 	if err != nil {
 		return err
 	}

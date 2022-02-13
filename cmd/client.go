@@ -13,7 +13,7 @@ func getClient() (*rpc.Client, Binding) {
 		// return client on open tcp connection
 		client, err := rpc.Dial("tcp", b.Address)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("failed to connect to %s", b.Address)
 		}
 		return client, b
 	} else {
@@ -28,6 +28,9 @@ func getClient() (*rpc.Client, Binding) {
 		}
 		// return client on tls connection
 		conn, err := tls.Dial("tcp", b.Address, &config)
+		if err != nil {
+			log.Fatalf("failed to connect to %s with TLS", b.Address)
+		}
 		return rpc.NewClient(conn), b
 	}
 }
