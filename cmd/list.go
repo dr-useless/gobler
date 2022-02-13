@@ -24,7 +24,10 @@ func handleList(cmd *cobra.Command, args []string) {
 
 	rpcArgs := common.Args{
 		AuthSecret: binding.AuthSecret,
-		Key:        args[0],
+	}
+
+	if len(args) > 0 {
+		rpcArgs.Key = args[0]
 	}
 
 	if len(args) > 1 {
@@ -35,8 +38,11 @@ func handleList(cmd *cobra.Command, args []string) {
 		rpcArgs.Limit = limit
 	}
 
-	var reply common.Result
-	client.Call("Store.List", rpcArgs, &reply)
+	var reply common.KeysReply
+	err := client.Call("Store.List", rpcArgs, &reply)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("reply", reply.Keys)
 }

@@ -1,7 +1,12 @@
 package main
 
-import "github.com/dr-useless/gobler/cmd"
+import (
+	"log"
+
+	"github.com/dr-useless/gobler/cmd"
+)
 
 func main() {
+	log.SetPrefix("gobler ")
 	cmd.Execute()
 }

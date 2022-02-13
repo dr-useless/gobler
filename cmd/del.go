@@ -32,8 +32,11 @@ func handleDel(cmd *cobra.Command, args []string) {
 		Value:      []byte(args[1]),
 	}
 
-	var reply common.Result
-	client.Call("Store.Put", rpcArgs, &reply)
+	var reply common.StatusReply
+	err := client.Call("Store.Put", rpcArgs, &reply)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("reply", string(reply.Status))
 }

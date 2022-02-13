@@ -31,8 +31,11 @@ func handleGet(cmd *cobra.Command, args []string) {
 		Key:        args[0],
 	}
 
-	var reply common.Result
-	client.Call("Store.Get", rpcArgs, &reply)
+	var reply common.ValueReply
+	err := client.Call("Store.Get", rpcArgs, &reply)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("reply", string(reply.Value))
 }
