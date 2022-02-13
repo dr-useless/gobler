@@ -11,34 +11,34 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// getCmd represents the get command
-var getCmd = &cobra.Command{
-	Use:   "get",
-	Short: "Get a value from the bound gobkv instance",
-	Long:  "Usage: gobler get the_key",
-	Run:   handleGet,
+// putCmd represents the get command
+var putCmd = &cobra.Command{
+	Use:   "put",
+	Short: "Set a value in the bound gobkv instance",
+	Long:  "Usage: gobler put the_key the_value",
+	Run:   handlePut,
 }
 
 func init() {
-	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(putCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// getCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// putCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// getCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// putCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func handleGet(cmd *cobra.Command, args []string) {
-	if len(args) < 1 {
-		log.Println("specify a key")
+func handlePut(cmd *cobra.Command, args []string) {
+	if len(args) < 2 {
+		log.Println("specify a key & value")
 		return
 	}
-	log.Println("handle get", args[0])
+	log.Println("handle put", args[0], args[1])
 
 	client, binding, err := getClient()
 	if err != nil {
@@ -48,10 +48,11 @@ func handleGet(cmd *cobra.Command, args []string) {
 	rpcArgs := rpc.Args{
 		AuthSecret: binding.AuthSecret,
 		Key:        args[0],
+		Value:      []byte(args[1]),
 	}
 
 	var reply rpc.Result
-	client.Call("Store.Get", rpcArgs, &reply)
+	client.Call("Store.Put", rpcArgs, &reply)
 
 	log.Println("reply", reply)
 }

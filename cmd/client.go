@@ -1,10 +1,12 @@
 package cmd
 
-import "log"
+import (
+	"net/rpc"
+)
 
-func getClient() {
+func getClient() (*rpc.Client, Binding, error) {
 	b := Binding{}
 	b.read()
-
-	log.Println("binding", b)
+	conn, err := rpc.Dial("tcp", b.Address)
+	return conn, b, err
 }

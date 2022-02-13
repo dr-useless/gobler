@@ -10,11 +10,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const (
-	flagAddr = "addr"
-	flagAuth = "auth"
-)
-
 const path = "gobler.json"
 
 type Binding struct {

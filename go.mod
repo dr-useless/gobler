@@ -3,6 +3,7 @@ module github.com/dr-useless/gobler
 go 1.17
 
 require (
+	github.com/dr-useless/gobkv v0.0.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
