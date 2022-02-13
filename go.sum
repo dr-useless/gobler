@@ -96,6 +96,8 @@ github.com/dr-useless/gobkv v0.0.1 h1:HEijX/uc1DY5jk5WL/gFhHLh6ckncwbvmAEi2FE+D+
 github.com/dr-useless/gobkv v0.0.1/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/dr-useless/gobkv v0.0.2 h1:4naEzi/p4vIw6hPE9DL9td1ryRRcHlxS9/wYPF1I5Ys=
 github.com/dr-useless/gobkv v0.0.2/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
+github.com/dr-useless/gobkv v0.0.4 h1:6MNkoOv8wwlxW6rmGjC0V7ulIgC21di/pvy+YvLSU3M=
+github.com/dr-useless/gobkv v0.0.4/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
