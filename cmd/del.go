@@ -7,20 +7,20 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var putCmd = &cobra.Command{
-	Use:   "put",
-	Short: "Set a value in the bound gobkv instance",
-	Long:  "Usage: gobler put the_key the_value",
-	Run:   handlePut,
+var delCmd = &cobra.Command{
+	Use:   "del",
+	Short: "Remove a key from the bound gobkv instance",
+	Long:  "Usage: gobler del the_key",
+	Run:   handleDel,
 }
 
 func init() {
-	rootCmd.AddCommand(putCmd)
+	rootCmd.AddCommand(delCmd)
 }
 
-func handlePut(cmd *cobra.Command, args []string) {
+func handleDel(cmd *cobra.Command, args []string) {
 	if len(args) < 2 {
-		log.Println("specify a key & value")
+		log.Println("specify a key")
 		return
 	}
 

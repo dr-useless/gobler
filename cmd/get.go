@@ -1,17 +1,12 @@
-/*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
 	"log"
 
-	"github.com/dr-useless/gobkv/rpc"
+	"github.com/dr-useless/gobkv/common"
 	"github.com/spf13/cobra"
 )
 
-// getCmd represents the get command
 var getCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get a value from the bound gobkv instance",
@@ -21,16 +16,6 @@ var getCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(getCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// getCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// getCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func handleGet(cmd *cobra.Command, args []string) {
@@ -38,20 +23,16 @@ func handleGet(cmd *cobra.Command, args []string) {
 		log.Println("specify a key")
 		return
 	}
-	log.Println("handle get", args[0])
 
-	client, binding, err := getClient()
-	if err != nil {
-		log.Fatal(err)
-	}
+	client, binding := getClient()
 
-	rpcArgs := rpc.Args{
+	rpcArgs := common.Args{
 		AuthSecret: binding.AuthSecret,
 		Key:        args[0],
 	}
 
-	var reply rpc.Result
+	var reply common.Result
 	client.Call("Store.Get", rpcArgs, &reply)
 
-	log.Println("reply", reply)
+	log.Println("reply", string(reply.Value))
 }
