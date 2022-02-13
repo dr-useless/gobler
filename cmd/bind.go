@@ -15,12 +15,14 @@ const path = "gobler.json"
 type Binding struct {
 	Address    string
 	AuthSecret string
+	CertFile   string
+	KeyFile    string
 }
 
 var bindCmd = &cobra.Command{
 	Use:   "bind",
 	Short: "Bind to a gobkv instance",
-	Long:  "Usage: gobler bind [ADDRESS] [AUTH_SECRET]",
+	Long:  "Usage: gobler bind [ADDRESS] [AUTH_SECRET] [CERT_FILE] [KEY_FILE]",
 	Run:   handleBind,
 }
 
@@ -29,27 +31,27 @@ func init() {
 }
 
 func handleBind(cmd *cobra.Command, args []string) {
+	b := Binding{}
+
 	if len(args) < 1 {
 		log.Println("specify an address")
 		return
 	}
 
-	addr := args[0]
-	var auth string
-	if len(args) > 1 {
-		auth = args[1]
+	b.Address = args[0]
+	log.Printf("binding to: %s\r\n", args[0])
+
+	if len(args) >= 2 {
+		b.AuthSecret = args[1]
+		log.Printf("with auth secret: %s\r\n", args[1])
 	}
 
-	log.Printf("binding to: %s\r\n", addr)
-
-	if auth != "" {
-		log.Printf("with auth secret: %s\r\n", auth)
+	if len(args) >= 4 {
+		b.CertFile = args[2]
+		b.KeyFile = args[3]
+		log.Printf("using cert %s & key %s\r\n", args[2], args[3])
 	}
 
-	b := Binding{
-		Address:    addr,
-		AuthSecret: auth,
-	}
 	b.write()
 }
 
