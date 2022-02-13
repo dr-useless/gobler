@@ -90,6 +90,8 @@ github.com/coreos/go-systemd/v22 v22.3.2/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSV
 github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/dr-useless/gobkv v0.0.0-20220213182512-29bc6db9d91a h1:K+efg3fbrDx87Jh3QlOvTkbNde1ibFOCnfxfFnr2nPc=
+github.com/dr-useless/gobkv v0.0.0-20220213182512-29bc6db9d91a/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/dr-useless/gobkv v0.0.1 h1:HEijX/uc1DY5jk5WL/gFhHLh6ckncwbvmAEi2FE+D+w=
 github.com/dr-useless/gobkv v0.0.1/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/dr-useless/gobkv v0.0.2 h1:4naEzi/p4vIw6hPE9DL9td1ryRRcHlxS9/wYPF1I5Ys=
