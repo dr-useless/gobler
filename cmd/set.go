@@ -20,8 +20,7 @@ func init() {
 
 func handleSet(cmd *cobra.Command, args []string) {
 	if len(args) < 2 {
-		log.Println("specify a key & value")
-		return
+		log.Fatal("specify a key & value")
 	}
 
 	client, binding := getClient()
