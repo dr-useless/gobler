@@ -7,18 +7,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var putCmd = &cobra.Command{
-	Use:   "put",
+var setCmd = &cobra.Command{
+	Use:   "set",
 	Short: "Set a value in the bound gobkv instance",
-	Long:  "Usage: gobler put the_key the_value",
-	Run:   handlePut,
+	Long:  "Usage: gobler set the_key the_value",
+	Run:   handleSet,
 }
 
 func init() {
-	rootCmd.AddCommand(putCmd)
+	rootCmd.AddCommand(setCmd)
 }
 
-func handlePut(cmd *cobra.Command, args []string) {
+func handleSet(cmd *cobra.Command, args []string) {
 	if len(args) < 2 {
 		log.Println("specify a key & value")
 		return
@@ -33,7 +33,7 @@ func handlePut(cmd *cobra.Command, args []string) {
 	}
 
 	var reply common.StatusReply
-	err := client.Call("Store.Put", rpcArgs, &reply)
+	err := client.Call("Store.Set", rpcArgs, &reply)
 	if err != nil {
 		log.Fatal(err)
 	}
