@@ -1,11 +1,10 @@
 package cmd
 
 import (
-	"crypto/sha1"
+	"crypto/rand"
 	"encoding/base64"
-	"encoding/binary"
+	"hash/fnv"
 	"log"
-	"math/rand"
 	"strconv"
 	"sync"
 
@@ -39,13 +38,14 @@ func handleTest(cmd *cobra.Command, args []string) {
 		AuthSecret: binding.AuthSecret,
 	}
 
-	h := sha1.New()
+	h := fnv.New64a()
 
 	var wg sync.WaitGroup
 
+	log.Println("working...")
 	for i := 0; i < limit; i++ {
-		randBytes := make([]byte, 4)
-		binary.BigEndian.PutUint32(randBytes, rand.Uint32())
+		randBytes := make([]byte, 16)
+		rand.Read(randBytes)
 		h.Write(randBytes)
 		rpcArgs.Key = base64.RawStdEncoding.EncodeToString(h.Sum(nil))
 		h.Write([]byte("test"))
@@ -58,8 +58,7 @@ func handleTest(cmd *cobra.Command, args []string) {
 			client.Call("Store.Set", rpcArgs, &reply)
 		}(rpcArgs)
 	}
-
-	log.Println("working...")
+	log.Println("waiting...")
 	wg.Wait()
 	log.Printf("done, set %v random keys", limit)
 
