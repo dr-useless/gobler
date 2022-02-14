@@ -28,6 +28,9 @@ var bindCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(bindCmd)
+	bindCmd.Flags().String("a", "", "auth secret")
+	bindCmd.Flags().String("c", "", "TLS cert file")
+	bindCmd.Flags().String("k", "", "TLS key file")
 }
 
 func handleBind(cmd *cobra.Command, args []string) {
@@ -41,16 +44,15 @@ func handleBind(cmd *cobra.Command, args []string) {
 	b.Address = args[0]
 	log.Printf("binding to: %s\r\n", args[0])
 
-	if len(args) >= 2 {
-		b.AuthSecret = args[1]
-		log.Printf("with auth secret: %s\r\n", args[1])
-	}
+	authSecret, _ := cmd.Flags().GetString("a")
+	b.AuthSecret = authSecret
+	log.Printf("with auth secret: %s\r\n", authSecret)
 
-	if len(args) >= 4 {
-		b.CertFile = args[2]
-		b.KeyFile = args[3]
-		log.Printf("using cert %s & key %s\r\n", args[2], args[3])
-	}
+	certFile, _ := cmd.Flags().GetString("c")
+	b.CertFile = certFile
+	keyFile, _ := cmd.Flags().GetString("k")
+	b.KeyFile = keyFile
+	log.Printf("using cert %s & key %s\r\n", certFile, keyFile)
 
 	b.write()
 }
