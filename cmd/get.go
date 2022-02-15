@@ -37,5 +37,5 @@ func handleGet(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	log.Println("reply", string(reply.Value))
+	log.Println(string(reply.Value))
 }

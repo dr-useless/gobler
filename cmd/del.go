@@ -38,5 +38,5 @@ func handleDel(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	log.Println("reply", string(reply.Status))
+	log.Println("status:", common.MapStatus()[reply.Status])
 }

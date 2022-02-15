@@ -7,6 +7,7 @@ import (
 	"log"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/dr-useless/gobkv/common"
 	"github.com/spf13/cobra"
@@ -52,14 +53,16 @@ func handleTest(cmd *cobra.Command, args []string) {
 		rpcArgs.Value = h.Sum(nil)
 		h.Reset()
 		wg.Add(1)
-		go func(rpcArgs common.Args) {
-			defer wg.Done()
+		go func(rpcArgs *common.Args) {
 			var reply common.StatusReply // unused
 			client.Call("Store.Set", rpcArgs, &reply)
-		}(rpcArgs)
+			wg.Done()
+		}(&rpcArgs)
 	}
 	log.Println("waiting...")
+	tStart := time.Now()
 	wg.Wait()
-	log.Printf("done, set %v random keys", limit)
+	dur := time.Since(tStart)
+	log.Printf("done, set %v random keys in %v seconds", limit, dur.Seconds())
 
 }

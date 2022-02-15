@@ -42,5 +42,5 @@ func handleList(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	log.Println("reply", reply.Keys)
+	log.Println(reply.Keys)
 }
