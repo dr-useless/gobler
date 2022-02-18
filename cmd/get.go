@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bufio"
 	"log"
 
 	"github.com/dr-useless/gobkv/protocol"
@@ -33,16 +32,12 @@ func handleGet(cmd *cobra.Command, args []string) {
 		Key: args[0],
 	}
 
-	bw := bufio.NewWriter(conn)
-	msg.Write(bw)
-	bw.Flush()
+	msg.Write(conn)
 
-	resp := protocol.Message{}
-	br := bufio.NewReader(conn)
-	resp.Read(br)
+	msg.Read(conn)
 
 	log.Printf("op: %s, status: %s, value: %s\r\n",
-		protocol.MapOp()[resp.Op],
-		protocol.MapStatus()[resp.Status],
-		string(resp.Value))
+		protocol.MapOp()[msg.Op],
+		protocol.MapStatus()[msg.Status],
+		string(msg.Value))
 }

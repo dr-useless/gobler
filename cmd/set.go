@@ -52,6 +52,8 @@ func handleSet(cmd *cobra.Command, args []string) {
 	br := bufio.NewReader(conn)
 	resp.Read(br)
 
+	conn.Close()
+
 	log.Printf("op: %s, status: %s\r\n",
 		protocol.MapOp()[resp.Op],
 		protocol.MapStatus()[resp.Status])

@@ -18,10 +18,9 @@ func getBinding() Binding {
 func getConn(b Binding) net.Conn {
 
 	if b.CertFile == "" {
-		// return client on open tcp connection
-		conn, err := net.Dial("tcp", b.Address)
+		conn, err := net.Dial(b.Network, b.Address)
 		if err != nil {
-			log.Fatalf("failed to connect to %s", b.Address)
+			log.Fatalf("failed to connect to %s over %s", b.Address, b.Network)
 		}
 		return conn
 	} else {
@@ -35,7 +34,7 @@ func getConn(b Binding) net.Conn {
 			InsecureSkipVerify: true,
 		}
 		// return client on tls connection
-		conn, err := tls.Dial("tcp", b.Address, &config)
+		conn, err := tls.Dial(b.Network, b.Address, &config)
 		if err != nil {
 			log.Fatalf("failed to connect to %s with TLS", b.Address)
 		}

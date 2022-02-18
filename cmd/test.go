@@ -47,10 +47,11 @@ func handleTest(cmd *cobra.Command, args []string) {
 	msg := protocol.Message{
 		Op: protocol.OpSet,
 	}
-	resp := protocol.Message{}
 
 	log.Println("working...")
 	tStart := time.Now()
+
+	randBytes := make([]byte, 16)
 
 	for i := 0; i < limit; i++ {
 		if ttl > 0 {
@@ -58,7 +59,6 @@ func handleTest(cmd *cobra.Command, args []string) {
 			msg.Expires = uint64(exp.Unix())
 		}
 
-		randBytes := make([]byte, 16)
 		rand.Read(randBytes)
 		h.Write(randBytes)
 		msg.Key = base64.RawStdEncoding.EncodeToString(h.Sum(nil))
@@ -71,11 +71,14 @@ func handleTest(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal("write msg:", err)
 		}
+	}
 
-		err = resp.Read(conn)
-		if err != nil {
-			log.Fatal("read resp:", err)
-		}
+	msg = protocol.Message{
+		Op: protocol.OpClose,
+	}
+	err = msg.Write(conn)
+	if err != nil {
+		log.Fatal("write msg:", err)
 	}
 
 	dur := time.Since(tStart)
