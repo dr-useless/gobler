@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"bufio"
 	"log"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/dr-useless/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -24,18 +25,24 @@ func handleGet(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	client, binding := getClient()
+	binding := getBinding()
+	conn := getConn(binding)
 
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
-		Key:        args[0],
+	msg := protocol.Message{
+		Op:  protocol.OpGet,
+		Key: args[0],
 	}
 
-	var reply common.ValueReply
-	err := client.Call("Store.Get", rpcArgs, &reply)
-	if err != nil {
-		log.Fatal(err)
-	}
+	bw := bufio.NewWriter(conn)
+	msg.Write(bw)
+	bw.Flush()
 
-	log.Println(string(reply.Value))
+	resp := protocol.Message{}
+	br := bufio.NewReader(conn)
+	resp.Read(br)
+
+	log.Printf("op: %s, status: %s, value: %s\r\n",
+		protocol.MapOp()[resp.Op],
+		protocol.MapStatus()[resp.Status],
+		string(resp.Value))
 }

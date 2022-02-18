@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"log"
-
-	"github.com/dr-useless/gobkv/common"
 	"github.com/spf13/cobra"
 )
 
@@ -20,27 +17,29 @@ func init() {
 }
 
 func handleList(cmd *cobra.Command, args []string) {
-	client, binding := getClient()
+	/*
+		client, binding := getClient()
 
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
-	}
+		rpcArgs := common.Args{
+			AuthSecret: binding.AuthSecret,
+		}
 
-	if len(args) > 0 {
-		rpcArgs.Key = args[0]
-	}
+		if len(args) > 0 {
+			rpcArgs.Key = args[0]
+		}
 
-	limit, err := cmd.Flags().GetInt("limit")
-	if err != nil {
-		log.Fatal("limit must be a valid integer")
-	}
-	rpcArgs.Limit = limit
+		limit, err := cmd.Flags().GetInt("limit")
+		if err != nil {
+			log.Fatal("limit must be a valid integer")
+		}
+		rpcArgs.Limit = limit
 
-	var reply common.KeysReply
-	err = client.Call("Store.List", rpcArgs, &reply)
-	if err != nil {
-		log.Fatal(err)
-	}
+		var reply common.KeysReply
+		err = client.Call("Store.List", rpcArgs, &reply)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	log.Println(reply.Keys)
+		log.Println(reply.Keys)
+	*/
 }

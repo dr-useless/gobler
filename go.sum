@@ -92,6 +92,10 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dr-useless/gobkv v0.0.6 h1:eDNmJWYx/T1wpeKjACwCGjFZ/MflE8SGM11e4WhjwOQ=
 github.com/dr-useless/gobkv v0.0.6/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
+github.com/dr-useless/gobkv v0.0.7 h1:mEe9bc3ZDwiN/rKmztaY9cLFxjZl/AVyzynonyszaCU=
+github.com/dr-useless/gobkv v0.0.7/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
+github.com/dr-useless/gobkv v0.0.8-alpha h1:Fh+Zd4bdSrUgHbd7Rq/O7JFZc/4ald7VGCSSG8L+plU=
+github.com/dr-useless/gobkv v0.0.8-alpha/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=

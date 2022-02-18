@@ -3,7 +3,7 @@ module github.com/dr-useless/gobler
 go 1.17
 
 require (
-	github.com/dr-useless/gobkv v0.0.6
+	github.com/dr-useless/gobkv v0.0.8-alpha
 	github.com/spf13/cobra v1.3.0
 )
 

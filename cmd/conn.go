@@ -3,19 +3,27 @@ package cmd
 import (
 	"crypto/tls"
 	"log"
-	"net/rpc"
+	"net"
 )
 
-func getClient() (*rpc.Client, Binding) {
+func getBinding() Binding {
 	b := Binding{}
-	b.read()
+	err := b.read()
+	if err != nil {
+		log.Fatal("failed to read binding", err)
+	}
+	return b
+}
+
+func getConn(b Binding) net.Conn {
+
 	if b.CertFile == "" {
 		// return client on open tcp connection
-		client, err := rpc.Dial("tcp", b.Address)
+		conn, err := net.Dial("tcp", b.Address)
 		if err != nil {
 			log.Fatalf("failed to connect to %s", b.Address)
 		}
-		return client, b
+		return conn
 	} else {
 		// load cert & key
 		cert, err := tls.LoadX509KeyPair(b.CertFile, b.KeyFile)
@@ -31,6 +39,6 @@ func getClient() (*rpc.Client, Binding) {
 		if err != nil {
 			log.Fatalf("failed to connect to %s with TLS", b.Address)
 		}
-		return rpc.NewClient(conn), b
+		return conn
 	}
 }
