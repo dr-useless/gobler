@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bufio"
 	"log"
 	"time"
 
@@ -30,7 +29,7 @@ func handleSet(cmd *cobra.Command, args []string) {
 	conn := getConn(b)
 
 	msg := protocol.Message{
-		Op:    protocol.OpSet,
+		Op:    protocol.OpSetAck,
 		Key:   args[0],
 		Value: []byte(args[1]),
 	}
@@ -44,17 +43,12 @@ func handleSet(cmd *cobra.Command, args []string) {
 		msg.Expires = uint64(expires.Unix())
 	}
 
-	bw := bufio.NewWriter(conn)
-	msg.Write(bw)
-	bw.Flush()
-
-	resp := protocol.Message{}
-	br := bufio.NewReader(conn)
-	resp.Read(br)
+	msg.Write(conn)
+	msg.Read(conn)
 
 	conn.Close()
 
 	log.Printf("op: %s, status: %s\r\n",
-		protocol.MapOp()[resp.Op],
-		protocol.MapStatus()[resp.Status])
+		protocol.MapOp()[msg.Op],
+		protocol.MapStatus()[msg.Status])
 }

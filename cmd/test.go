@@ -81,6 +81,8 @@ func handleTest(cmd *cobra.Command, args []string) {
 		log.Fatal("write msg:", err)
 	}
 
+	conn.Close()
+
 	dur := time.Since(tStart)
 	log.Printf("done, set %v random keys in %v seconds", limit, dur.Seconds())
 }
