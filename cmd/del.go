@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/dr-useless/gobkv/protocol"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -24,18 +26,21 @@ func handleDel(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	binding := getBinding()
-	conn := getConn(binding)
-
-	msg := protocol.Message{
-		Op:  protocol.OpDelAck,
-		Key: args[0],
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		fmt.Println(protocol.MapStatus()[authResp.Status])
 	}
 
-	msg.Write(conn)
+	err := client.Del(args[0], true)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	msg.Read(conn)
+	resp := <-client.MsgChan
 
-	log.Println("status:",
-		protocol.MapStatus()[msg.Status])
+	fmt.Println(protocol.MapStatus()[resp.Status])
 }

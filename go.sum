@@ -90,12 +90,6 @@ github.com/coreos/go-systemd/v22 v22.3.2/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSV
 github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/dr-useless/gobkv v0.0.6 h1:eDNmJWYx/T1wpeKjACwCGjFZ/MflE8SGM11e4WhjwOQ=
-github.com/dr-useless/gobkv v0.0.6/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
-github.com/dr-useless/gobkv v0.0.7 h1:mEe9bc3ZDwiN/rKmztaY9cLFxjZl/AVyzynonyszaCU=
-github.com/dr-useless/gobkv v0.0.7/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
-github.com/dr-useless/gobkv v0.0.8-alpha h1:Fh+Zd4bdSrUgHbd7Rq/O7JFZc/4ald7VGCSSG8L+plU=
-github.com/dr-useless/gobkv v0.0.8-alpha/go.mod h1:AVwD7oEzJSpa8wCPQDhizlMrHOY+b/b1zc6x/Od2rvo=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
@@ -230,6 +224,10 @@ github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:
 github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
+github.com/intob/chamux v0.1.1-0.20220224094430-def30206c683 h1:bB2pyx4S/7VdN+rE+LCOjsI6LYlgqJCaFpBjCOhC7M8=
+github.com/intob/chamux v0.1.1-0.20220224094430-def30206c683/go.mod h1:r7UXDsoJn60NRum5vxkeywm0WKv9SV5uwiTU60u5zOA=
+github.com/intob/gobkv v0.0.1-alpha h1:BYQxaLfqKU6Y2S2seWSDhZpirMnN8ezygJ66/b1sOPg=
+github.com/intob/gobkv v0.0.1-alpha/go.mod h1:nPXPgNf477t5FAivsIxYbkBqBik3PWsW0HiaJpSwdME=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/json-iterator/go v1.1.9/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=
 github.com/json-iterator/go v1.1.11/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=

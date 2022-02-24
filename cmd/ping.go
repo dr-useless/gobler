@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"bufio"
+	"fmt"
 	"log"
 
-	"github.com/dr-useless/gobkv/protocol"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -21,22 +22,12 @@ func init() {
 
 func handlePing(cmd *cobra.Command, args []string) {
 	conn := getConn(getBinding())
+	client := client.NewClient(conn)
 
-	msg := protocol.Message{
-		Op: protocol.OpPing,
-	}
+	client.Ping()
 
-	bw := bufio.NewWriter(conn)
-	msg.Write(bw)
-	bw.Flush()
-
-	resp := protocol.Message{}
-	br := bufio.NewReader(conn)
-	resp.Read(br)
-
-	conn.Close()
-
-	log.Printf("op: %s, status: %s\r\n",
-		protocol.MapOp()[resp.Op],
-		protocol.MapStatus()[resp.Status])
+	log.Println("waiting")
+	resp := <-client.MsgChan
+	log.Println("recvd")
+	fmt.Println(protocol.MapStatus()[resp.Status])
 }

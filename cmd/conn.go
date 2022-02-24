@@ -16,13 +16,13 @@ func getBinding() Binding {
 }
 
 func getConn(b Binding) net.Conn {
-
+	var conn net.Conn
 	if b.CertFile == "" {
-		conn, err := net.Dial(b.Network, b.Address)
+		var err error
+		conn, err = net.Dial(b.Network, b.Address)
 		if err != nil {
 			log.Fatalf("failed to connect to %s over %s", b.Address, b.Network)
 		}
-		return conn
 	} else {
 		// load cert & key
 		cert, err := tls.LoadX509KeyPair(b.CertFile, b.KeyFile)
@@ -34,10 +34,10 @@ func getConn(b Binding) net.Conn {
 			InsecureSkipVerify: true,
 		}
 		// return client on tls connection
-		conn, err := tls.Dial(b.Network, b.Address, &config)
+		conn, err = tls.Dial(b.Network, b.Address, &config)
 		if err != nil {
 			log.Fatalf("failed to connect to %s with TLS", b.Address)
 		}
-		return conn
 	}
+	return conn
 }
