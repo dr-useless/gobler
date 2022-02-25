@@ -9,15 +9,15 @@ A CLI for gobkv
 ```
 Bind writes the connection details to the local (pwd) config file.
 
-## $NETWORK
+### $NETWORK
 This can be any value supported by Go stdlib's `net.Conn` [Dial](https://pkg.go.dev/net?utm_source=gopls#Dial) method.
 
 For example `unix`, or `tcp`.
 
-## $ADDRESS
+### $ADDRESS
 As per [$NETWORK](#$NETWORK), can be any value supported by the Dial method, depending on your choice of network.
 
-## --a $AUTH
+### --a $AUTH
 The `-a` auth flag is for the (optional) auth secret, as set in your gobkv config.
 
 # get
@@ -32,7 +32,7 @@ Fairly self-explanatory; get the value for a given key.
 ```
 Write a value for a given key.
 
-## $TTL
+### $TTL
 Optional. This is the number of seconds after which the key will expire, and be cleaned up.
 
 # del
