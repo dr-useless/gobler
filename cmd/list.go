@@ -23,11 +23,6 @@ func init() {
 }
 
 func handleList(cmd *cobra.Command, args []string) {
-	if len(args) < 1 {
-		log.Println("specify a key prefix")
-		return
-	}
-
 	b := getBinding()
 	conn := getConn(b)
 	client := client.NewClient(conn)
@@ -37,19 +32,23 @@ func handleList(cmd *cobra.Command, args []string) {
 		log.Fatal("unauthorized")
 	}
 
-	err := client.List(args[0])
+	var prefix string
+	if len(args) > 0 {
+		prefix = args[0]
+	}
+
+	err := client.List(prefix)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	resp := <-client.MsgChan
-
-	if resp.Status == protocol.StatusOk {
-		for _, k := range resp.Keys {
-			fmt.Printf("%s, ", k)
+	for resp := range client.MsgChan {
+		if resp.Status == protocol.StatusStreamEnd {
+			fmt.Printf("\r\nEND")
+			break
 		}
-		fmt.Print("\r\n")
-	} else {
-		fmt.Println(protocol.MapStatus()[resp.Status])
+		fmt.Printf("%s, ", resp.Key)
 	}
+
+	fmt.Print("\r\n")
 }
