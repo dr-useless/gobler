@@ -4,7 +4,7 @@ gobler
 A CLI for gobkv
 
 # bind
-```bash
+```
 ./gobler bind $NETWORK $ADDRESS --a $AUTH
 ```
 Bind writes the connection details to the local (pwd) config file.
@@ -21,13 +21,13 @@ As per [$NETWORK](#$NETWORK), can be any value supported by the Dial method, dep
 The `-a` auth flag is for the (optional) auth secret, as set in your gobkv config.
 
 # get
-```bash
+```
 ./gobler get $KEY
 ```
 Fairly self-explanatory; get the value for a given key.
 
 # set
-```bash
+```
 ./gobler set $KEY $VALUE --ttl $TTL
 ```
 Write a value for a given key.
@@ -36,13 +36,13 @@ Write a value for a given key.
 Optional. This is the number of seconds after which the key will expire, and be cleaned up.
 
 # del
-```bash
-./gobler set $KEY
+```
+./gobler del $KEY
 ```
 Removes the given key.
 
 # list
-```bash
+```
 ./gobler list $KEY_PREFIX
 ```
 This will stream (individually) every key that matches the prefix.
