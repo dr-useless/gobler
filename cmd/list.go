@@ -1,46 +1,54 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all keys with the given prefix",
-	Long:  "Usage: gobler list key_prefix --limit 100",
-	Run:   handleList,
+	//Long:  "Usage: gobler list key_prefix --limit 100",
+	Long: "Usage: gobler list key_prefix",
+	Run:  handleList,
 }
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-	listCmd.Flags().Int("limit", 0, "max number of keys to return")
+	//listCmd.Flags().Int("limit", 0, "max number of keys to return")
 }
 
 func handleList(cmd *cobra.Command, args []string) {
-	client, binding := getClient()
-
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		log.Fatal("unauthorized")
 	}
 
+	var prefix string
 	if len(args) > 0 {
-		rpcArgs.Key = args[0]
+		prefix = args[0]
 	}
 
-	limit, err := cmd.Flags().GetInt("limit")
-	if err != nil {
-		log.Fatal("limit must be a valid integer")
-	}
-	rpcArgs.Limit = limit
-
-	var reply common.KeysReply
-	err = client.Call("Store.List", rpcArgs, &reply)
+	err := client.List(prefix)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println(reply.Keys)
+	for resp := range client.MsgChan {
+		if resp.Status == protocol.StatusStreamEnd {
+			fmt.Printf("\r\nEND")
+			break
+		}
+		fmt.Printf("%s, ", resp.Key)
+	}
+
+	fmt.Print("\r\n")
 }

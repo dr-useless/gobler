@@ -1,15 +1,17 @@
 package cmd
 
 import (
-	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"hash/fnv"
 	"log"
+	"math/rand"
 	"strconv"
 	"sync"
 	"time"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +24,7 @@ var testCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(testCmd)
+	testCmd.Flags().Int64("ttl", 0, "number of seconds before key expires")
 }
 
 func handleTest(cmd *cobra.Command, args []string) {
@@ -34,35 +37,53 @@ func handleTest(cmd *cobra.Command, args []string) {
 		log.Fatal("specify a number of keys to set")
 	}
 
-	client, binding := getClient()
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
+	ttl, err := cmd.Flags().GetInt64("ttl")
+	if err != nil {
+		log.Fatal("ttl must be a valid integer")
 	}
 
-	h := fnv.New64a()
-
-	var wg sync.WaitGroup
-
-	log.Println("working...")
-	for i := 0; i < limit; i++ {
-		randBytes := make([]byte, 16)
-		rand.Read(randBytes)
-		h.Write(randBytes)
-		rpcArgs.Key = base64.RawStdEncoding.EncodeToString(h.Sum(nil))
-		h.Write([]byte("test"))
-		rpcArgs.Value = h.Sum(nil)
-		h.Reset()
-		wg.Add(1)
-		go func(rpcArgs *common.Args) {
-			var reply common.StatusReply // unused
-			client.Call("Store.Set", rpcArgs, &reply)
-			wg.Done()
-		}(&rpcArgs)
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		log.Fatal("unauthorized")
 	}
-	log.Println("waiting...")
+
+	var exp int64
+	if ttl > 0 {
+		exp = time.Now().Add(time.Duration(ttl) * time.Second).Unix()
+	}
+
+	fmt.Println("working...")
 	tStart := time.Now()
+
+	wg := new(sync.WaitGroup)
+
+	for i := 0; i < limit; i++ {
+		wg.Add(1)
+		go func(exp int64) {
+			rand.Seed(time.Now().UnixNano())
+			randBytes := make([]byte, 16)
+			rand.Read(randBytes)
+
+			h := fnv.New128a()
+			h.Write(randBytes)
+			key := base64.RawStdEncoding.EncodeToString(h.Sum(nil))
+
+			h.Write([]byte("test"))
+			value := h.Sum(nil)
+
+			err := client.Set(key, value, exp, false)
+			if err != nil {
+				panic(err)
+			}
+			wg.Done()
+		}(exp)
+	}
+
 	wg.Wait()
 	dur := time.Since(tStart)
-	log.Printf("done, set %v random keys in %v seconds", limit, dur.Seconds())
-
+	fmt.Printf("done, set %v random keys in %v seconds\r\n", limit, dur.Seconds())
 }

@@ -1,9 +1,12 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
+	"time"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +19,7 @@ var setCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(setCmd)
+	setCmd.Flags().Int64("ttl", 0, "number of seconds before key expires")
 }
 
 func handleSet(cmd *cobra.Command, args []string) {
@@ -23,19 +27,30 @@ func handleSet(cmd *cobra.Command, args []string) {
 		log.Fatal("specify a key & value")
 	}
 
-	client, binding := getClient()
-
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
-		Key:        args[0],
-		Value:      []byte(args[1]),
+	ttl, err := cmd.Flags().GetInt64("ttl")
+	if err != nil {
+		log.Fatal("ttl must be a valid integer")
+	}
+	var expires int64
+	if ttl > 0 {
+		expires = time.Now().Add(time.Duration(ttl) * time.Second).Unix()
 	}
 
-	var reply common.StatusReply
-	err := client.Call("Store.Set", rpcArgs, &reply)
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		log.Fatal("unauthorized")
+	}
+
+	err = client.Set(args[0], []byte(args[1]), expires, true)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("status:", common.MapStatus()[reply.Status])
+	resp := <-client.MsgChan
+
+	fmt.Println(protocol.MapStatus()[resp.Status])
 }

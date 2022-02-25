@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -24,18 +26,25 @@ func handleGet(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	client, binding := getClient()
-
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
-		Key:        args[0],
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		log.Fatal("unauthorized")
 	}
 
-	var reply common.ValueReply
-	err := client.Call("Store.Get", rpcArgs, &reply)
+	err := client.Get(args[0])
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println(string(reply.Value))
+	resp := <-client.MsgChan
+
+	if resp.Status == protocol.StatusOk {
+		fmt.Println(string(resp.Value))
+	} else {
+		fmt.Println(protocol.MapStatus()[resp.Status])
+	}
 }

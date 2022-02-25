@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/dr-useless/gobkv/common"
+	"github.com/intob/gobkv/client"
+	"github.com/intob/gobkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -19,24 +21,26 @@ func init() {
 }
 
 func handleDel(cmd *cobra.Command, args []string) {
-	if len(args) < 2 {
+	if len(args) < 1 {
 		log.Println("specify a key")
 		return
 	}
 
-	client, binding := getClient()
-
-	rpcArgs := common.Args{
-		AuthSecret: binding.AuthSecret,
-		Key:        args[0],
-		Value:      []byte(args[1]),
+	b := getBinding()
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	client.Auth(b.AuthSecret)
+	authResp := <-client.MsgChan
+	if authResp.Status != protocol.StatusOk {
+		fmt.Println(protocol.MapStatus()[authResp.Status])
 	}
 
-	var reply common.StatusReply
-	err := client.Call("Store.Put", rpcArgs, &reply)
+	err := client.Del(args[0], true)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("status:", common.MapStatus()[reply.Status])
+	resp := <-client.MsgChan
+
+	fmt.Println(protocol.MapStatus()[resp.Status])
 }
