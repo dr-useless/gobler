@@ -27,7 +27,7 @@ func handlePing(cmd *cobra.Command, args []string) {
 	client.Ping()
 
 	log.Println("waiting")
-	resp := <-client.MsgChan
+	resp := <-client.Msgs
 	log.Println("recvd")
 	fmt.Println(protocol.MapStatus()[resp.Status])
 }

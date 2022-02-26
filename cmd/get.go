@@ -30,7 +30,7 @@ func handleGet(cmd *cobra.Command, args []string) {
 	conn := getConn(b)
 	client := client.NewClient(conn)
 	client.Auth(b.AuthSecret)
-	authResp := <-client.MsgChan
+	authResp := <-client.Msgs
 	if authResp.Status != protocol.StatusOk {
 		log.Fatal("unauthorized")
 	}
@@ -40,7 +40,7 @@ func handleGet(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	resp := <-client.MsgChan
+	resp := <-client.Msgs
 
 	if resp.Status == protocol.StatusOk {
 		fmt.Println(string(resp.Value))

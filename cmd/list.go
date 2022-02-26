@@ -27,7 +27,7 @@ func handleList(cmd *cobra.Command, args []string) {
 	conn := getConn(b)
 	client := client.NewClient(conn)
 	client.Auth(b.AuthSecret)
-	authResp := <-client.MsgChan
+	authResp := <-client.Msgs
 	if authResp.Status != protocol.StatusOk {
 		log.Fatal("unauthorized")
 	}
@@ -42,7 +42,7 @@ func handleList(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	for resp := range client.MsgChan {
+	for resp := range client.Msgs {
 		if resp.Status == protocol.StatusStreamEnd {
 			fmt.Printf("\r\nEND")
 			break

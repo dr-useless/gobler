@@ -30,7 +30,7 @@ func handleDel(cmd *cobra.Command, args []string) {
 	conn := getConn(b)
 	client := client.NewClient(conn)
 	client.Auth(b.AuthSecret)
-	authResp := <-client.MsgChan
+	authResp := <-client.Msgs
 	if authResp.Status != protocol.StatusOk {
 		fmt.Println(protocol.MapStatus()[authResp.Status])
 	}
@@ -40,7 +40,7 @@ func handleDel(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	resp := <-client.MsgChan
+	resp := <-client.Msgs
 
 	fmt.Println(protocol.MapStatus()[resp.Status])
 }

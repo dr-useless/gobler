@@ -224,7 +224,6 @@ github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:
 github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
-github.com/intob/chamux v0.2.0 h1:4pMzgowd/JNeMXAwsQkSdYS01dh0HEdMv8kS9n1xVUM=
 github.com/intob/chamux v0.2.0/go.mod h1:r7UXDsoJn60NRum5vxkeywm0WKv9SV5uwiTU60u5zOA=
 github.com/intob/gobkv v0.0.1-beta h1:N5IPqzHzq2QwbaJvyWShoaVQ3+DTdH0efCSRXzs6bBQ=
 github.com/intob/gobkv v0.0.1-beta/go.mod h1:1jJu81bL0gbkG/ZMULUtUJTb8EX0ELT972zhLRIvQ+s=
