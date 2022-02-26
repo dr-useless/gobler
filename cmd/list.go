@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all keys with the given prefix",
-	//Long:  "Usage: gobler list key_prefix --limit 100",
-	Long: "Usage: gobler list key_prefix",
+	//Long:  "Usage: rkteer list key_prefix --limit 100",
+	Long: "Usage: rkteer list key_prefix",
 	Run:  handleList,
 }
 

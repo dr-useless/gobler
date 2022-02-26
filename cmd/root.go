@@ -8,8 +8,8 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "gobler",
-	Short: "Make RPCs on a gobkv instance",
+	Use:   "rkteer",
+	Short: "Make RPCs on a rocketkv instance",
 	/*
 		Long: `A longer description that spans multiple lines and likely contains
 		examples and usage of using your application. For example:

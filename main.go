@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/intob/gobler/cmd"
+	"github.com/intob/rkteer/cmd"
 )
 
 func main() {

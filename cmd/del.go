@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var delCmd = &cobra.Command{
 	Use:   "del",
-	Short: "Remove a key from the bound gobkv instance",
-	Long:  "Usage: gobler del the_key",
+	Short: "Remove a key from the bound rocketkv instance",
+	Long:  "Usage: rkteer del the_key",
 	Run:   handleDel,
 }
 

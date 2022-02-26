@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var pingCmd = &cobra.Command{
 	Use:   "ping",
-	Short: "Test the bound gobkv instance",
-	Long:  "Usage: gobler ping",
+	Short: "Test the bound rocketkv instance",
+	Long:  "Usage: rkteer ping",
 	Run:   handlePing,
 }
 

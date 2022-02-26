@@ -10,15 +10,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var testCmd = &cobra.Command{
 	Use:   "test",
-	Short: "Populate the bound gobkv instance with test data",
-	Long:  "Usage: gobler test [NUMBER_OF_KEYS]",
+	Short: "Populate the bound rocketkv instance with test data",
+	Long:  "Usage: rkteer test [NUMBER_OF_KEYS]",
 	Run:   handleTest,
 }
 

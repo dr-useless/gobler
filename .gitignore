@@ -7,5 +7,5 @@
 *.out
 *.pprof
 
-gobler
-gobler.json
+rkteer
+rkteer.cfg.json

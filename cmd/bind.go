@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const path = "gobler.json"
+const path = "rkteer.cfg.json"
 
 type Binding struct {
 	Network    string
@@ -22,8 +22,8 @@ type Binding struct {
 
 var bindCmd = &cobra.Command{
 	Use:   "bind",
-	Short: "Bind to a gobkv instance",
-	Long:  "Usage: gobler bind [NETWORK] [ADDRESS] [AUTH_SECRET] [CERT_FILE] [KEY_FILE]",
+	Short: "Bind to a rocketkv instance",
+	Long:  "Usage: rkteer bind [NETWORK] [ADDRESS] [AUTH_SECRET] [CERT_FILE] [KEY_FILE]",
 	Run:   handleBind,
 }
 

@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var getCmd = &cobra.Command{
 	Use:   "get",
-	Short: "Get a value from the bound gobkv instance",
-	Long:  "Usage: gobler get the_key",
+	Short: "Get a value from the bound rocketkv instance",
+	Long:  "Usage: rkteer get the_key",
 	Run:   handleGet,
 }
 

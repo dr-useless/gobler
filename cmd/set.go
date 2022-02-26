@@ -5,15 +5,15 @@ import (
 	"log"
 	"time"
 
-	"github.com/intob/gobkv/client"
-	"github.com/intob/gobkv/protocol"
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
 var setCmd = &cobra.Command{
 	Use:   "set",
-	Short: "Set a value in the bound gobkv instance",
-	Long:  "Usage: gobler set the_key the_value",
+	Short: "Set a value in the bound rocketkv instance",
+	Long:  "Usage: rkteer set the_key the_value",
 	Run:   handleSet,
 }
 

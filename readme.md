@@ -1,11 +1,11 @@
-gobler
+rkteer
 -----
 
-A CLI for gobkv
+A CLI for rocketkv
 
 # bind
 ```
-./gobler bind $NETWORK $ADDRESS --a $AUTH
+./rkteer bind $NETWORK $ADDRESS --a $AUTH
 ```
 Bind writes the connection details to the local (pwd) config file.
 
@@ -18,17 +18,17 @@ For example `unix`, or `tcp`.
 As per [$NETWORK](#$NETWORK), can be any value supported by the Dial method, depending on your choice of network.
 
 ### --a $AUTH
-The `-a` auth flag is for the (optional) auth secret, as set in your gobkv config.
+The `-a` auth flag is for the (optional) auth secret, as set in your rkteer config.
 
 # get
 ```
-./gobler get $KEY
+./rkteer get $KEY
 ```
 Fairly self-explanatory; get the value for a given key.
 
 # set
 ```
-./gobler set $KEY $VALUE --ttl $TTL
+./rkteer set $KEY $VALUE --ttl $TTL
 ```
 Write a value for a given key.
 
@@ -37,12 +37,12 @@ Optional. This is the number of seconds after which the key will expire, and be 
 
 # del
 ```
-./gobler del $KEY
+./rkteer del $KEY
 ```
 Removes the given key.
 
 # list
 ```
-./gobler list $KEY_PREFIX
+./rkteer list $KEY_PREFIX
 ```
 This will stream (individually) every key that matches the prefix.
