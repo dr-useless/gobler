@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/base64"
 	"fmt"
-	"hash/fnv"
 	"log"
 	"math/rand"
 	"strconv"
@@ -56,26 +55,20 @@ func handleTest(cmd *cobra.Command, args []string) {
 		exp = time.Now().Add(time.Duration(ttl) * time.Second).Unix()
 	}
 
+	rand.Seed(time.Now().UnixNano())
+	wg := new(sync.WaitGroup)
+
 	fmt.Println("working...")
 	tStart := time.Now()
-
-	wg := new(sync.WaitGroup)
 
 	for i := 0; i < limit; i++ {
 		wg.Add(1)
 		go func(exp int64) {
-			rand.Seed(time.Now().UnixNano())
 			randBytes := make([]byte, 16)
 			rand.Read(randBytes)
+			key := base64.RawStdEncoding.EncodeToString(randBytes)
 
-			h := fnv.New128a()
-			h.Write(randBytes)
-			key := base64.RawStdEncoding.EncodeToString(h.Sum(nil))
-
-			h.Write([]byte("test"))
-			value := h.Sum(nil)
-
-			err := client.Set(key, value, exp, false)
+			err := client.Set(key, randBytes, exp, false)
 			if err != nil {
 				panic(err)
 			}
