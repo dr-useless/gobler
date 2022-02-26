@@ -2,6 +2,7 @@ rkteer
 -----
 
 Rocketeer, a CLI for rocketkv.
+Using the [client package](https://github.com/intob/rocketkv/client) in rocketkv.
 
 # bind
 ```
