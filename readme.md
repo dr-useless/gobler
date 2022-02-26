@@ -1,7 +1,7 @@
 rkteer
 -----
 
-A CLI for rocketkv
+Rocketeer, a CLI for rocketkv.
 
 # bind
 ```

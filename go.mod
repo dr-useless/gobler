@@ -3,7 +3,7 @@ module github.com/intob/rkteer
 go 1.17
 
 require (
-	github.com/intob/rocketkv v0.0.1
+	github.com/intob/rocketkv v0.0.2
 	github.com/spf13/cobra v1.3.0
 )
 
