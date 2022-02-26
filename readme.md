@@ -47,3 +47,9 @@ Removes the given key.
 ./rkteer list $KEY_PREFIX
 ```
 This will stream (individually) every key that matches the prefix.
+
+# list
+```
+./rkteer count $KEY_PREFIX
+```
+Returns the count of keys that match the given prefix. If no prefix is given, the count will be of all keys in the KV store.
