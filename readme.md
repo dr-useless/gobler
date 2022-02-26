@@ -48,7 +48,7 @@ Removes the given key.
 ```
 This will stream (individually) every key that matches the prefix.
 
-# list
+# count
 ```
 ./rkteer count $KEY_PREFIX
 ```
