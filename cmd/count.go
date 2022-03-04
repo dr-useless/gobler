@@ -25,10 +25,12 @@ func handleCount(cmd *cobra.Command, args []string) {
 	b := getBinding()
 	conn := getConn(b)
 	client := client.NewClient(conn)
-	client.Auth(b.AuthSecret)
-	authResp := <-client.Msgs
-	if authResp.Status != protocol.StatusOk {
-		log.Fatal("unauthorized")
+	if b.AuthSecret != "" {
+		client.Auth(b.AuthSecret)
+		authResp := <-client.Msgs
+		if authResp.Status != protocol.StatusOk {
+			log.Fatal("unauthorized")
+		}
 	}
 
 	var prefix string

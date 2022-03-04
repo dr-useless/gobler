@@ -44,10 +44,12 @@ func handleTest(cmd *cobra.Command, args []string) {
 	b := getBinding()
 	conn := getConn(b)
 	client := client.NewClient(conn)
-	client.Auth(b.AuthSecret)
-	authResp := <-client.Msgs
-	if authResp.Status != protocol.StatusOk {
-		log.Fatal("unauthorized")
+	if b.AuthSecret != "" {
+		client.Auth(b.AuthSecret)
+		authResp := <-client.Msgs
+		if authResp.Status != protocol.StatusOk {
+			log.Fatal("unauthorized")
+		}
 	}
 
 	var exp int64
@@ -66,7 +68,7 @@ func handleTest(cmd *cobra.Command, args []string) {
 		go func(exp int64) {
 			randBytes := make([]byte, 16)
 			rand.Read(randBytes)
-			key := base64.RawStdEncoding.EncodeToString(randBytes)
+			key := base64.RawURLEncoding.EncodeToString(randBytes)
 
 			err := client.Set(key, randBytes, exp, false)
 			if err != nil {

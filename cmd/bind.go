@@ -3,10 +3,12 @@ package cmd
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
-	"log"
 	"os"
 
+	"github.com/intob/rocketkv/client"
+	"github.com/intob/rocketkv/protocol"
 	"github.com/spf13/cobra"
 )
 
@@ -38,25 +40,40 @@ func handleBind(cmd *cobra.Command, args []string) {
 	b := Binding{}
 
 	if len(args) < 2 {
-		log.Println("specify a network & address")
+		fmt.Println("specify a network & address")
 		return
 	}
 
 	b.Network = args[0]
 	b.Address = args[1]
-	log.Printf("binding to: %s %s\r\n", b.Network, b.Address)
+	fmt.Printf("binding to: %s %s\r\n", b.Network, b.Address)
 
 	authSecret, _ := cmd.Flags().GetString("a")
 	b.AuthSecret = authSecret
-	log.Printf("with auth secret: %s\r\n", authSecret)
+	if authSecret != "" {
+		fmt.Printf("with auth secret: %s\r\n", authSecret)
+	}
 
 	certFile, _ := cmd.Flags().GetString("c")
 	b.CertFile = certFile
 	keyFile, _ := cmd.Flags().GetString("k")
 	b.KeyFile = keyFile
-	log.Printf("using cert %s & key %s\r\n", certFile, keyFile)
+	if certFile != "" {
+		fmt.Printf("using cert %s & key %s\r\n", certFile, keyFile)
+	}
 
 	b.write()
+
+	fmt.Println("will ping...")
+
+	conn := getConn(b)
+	client := client.NewClient(conn)
+	err := client.Ping()
+	if err != nil {
+		panic(err)
+	}
+	pingResp := <-client.Msgs
+	fmt.Println(protocol.MapStatus()[pingResp.Status])
 }
 
 func (b *Binding) read() error {
